@@ -62,6 +62,7 @@ public class Client extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         result = new javax.swing.JTextArea();
         doDecryption = new javax.swing.JButton();
+        doEncryption = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,6 +97,13 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        doEncryption.setText("Mã hóa");
+        doEncryption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doEncryptionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -115,7 +123,10 @@ public class Client extends javax.swing.JFrame {
                             .addComponent(chooseKeyFilePath)))
                     .addComponent(jLabel3)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(doDecryption))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(doDecryption)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(doEncryption)))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -134,7 +145,9 @@ public class Client extends javax.swing.JFrame {
                     .addComponent(keyFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(chooseKeyFilePath))
                 .addGap(18, 18, 18)
-                .addComponent(doDecryption)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(doDecryption)
+                    .addComponent(doEncryption))
                 .addGap(45, 45, 45)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -193,6 +206,22 @@ public class Client extends javax.swing.JFrame {
         fileSecketKeyPath = openFileChooser(textFile);
     }//GEN-LAST:event_chooseKeyFilePathActionPerformed
 
+    private void doEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doEncryptionActionPerformed
+        // TODO add your handling code here:
+        if (!checkDir()) {
+            JOptionPane.showMessageDialog(null, "Xin hãy kiểm tra dữ liệu đầu vào");
+        } else {
+            try {
+                // TODO add your handling code here:
+                dataOutputStream.writeUTF(textFile.getText());
+                result.setText(dataInputStream.readUTF());
+
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_doEncryptionActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -237,6 +266,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JButton chooseKeyFilePath;
     private javax.swing.JButton chooseTextFilePath;
     private javax.swing.JButton doDecryption;
+    private javax.swing.JButton doEncryption;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

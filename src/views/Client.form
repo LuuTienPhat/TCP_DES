@@ -41,7 +41,11 @@
                   </Group>
                   <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="jScrollPane1" alignment="0" min="-2" pref="251" max="-2" attributes="0"/>
-                  <Component id="doDecryption" alignment="0" min="-2" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="doDecryption" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="doEncryption" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace pref="86" max="32767" attributes="0"/>
           </Group>
@@ -65,7 +69,10 @@
                   <Component id="chooseKeyFilePath" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="doDecryption" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="doDecryption" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="doEncryption" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -132,6 +139,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="doDecryptionActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="doEncryption">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="M&#xe3; h&#xf3;a"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="doEncryptionActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
