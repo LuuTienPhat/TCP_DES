@@ -70,6 +70,7 @@ public class Client extends javax.swing.JFrame {
         result = new javax.swing.JTextArea();
         doDecryption = new javax.swing.JButton();
         doEncryption = new javax.swing.JButton();
+        saveFile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -111,6 +112,13 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        saveFile.setText("Lưu File");
+        saveFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -133,7 +141,9 @@ public class Client extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(doDecryption)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(doEncryption)))
+                        .addComponent(doEncryption)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(saveFile)))
                 .addContainerGap(86, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -154,7 +164,8 @@ public class Client extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(doDecryption)
-                    .addComponent(doEncryption))
+                    .addComponent(doEncryption)
+                    .addComponent(saveFile))
                 .addGap(45, 45, 45)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -190,7 +201,7 @@ public class Client extends javax.swing.JFrame {
         }
     }
 
-    private String openFileChooser(JTextField textField) {
+    private String showOpenDialog(JTextField textField) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new java.io.File("."));
         fileChooser.setDialogTitle("Chọn file");
@@ -202,27 +213,37 @@ public class Client extends javax.swing.JFrame {
         }
         return "";
     }
+    
+    private String showSaveDialog(String data) {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new java.io.File("."));
+        fileChooser.setDialogTitle("Lưu file");
+        int returnValue = fileChooser.showSaveDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            String file = fileChooser.getSelectedFile().getAbsolutePath();
+            writeFile(file, data);
+        }
+        return "";
+    }
 
-    private String readFile(String filePath) throws FileNotFoundException, IOException {
-        String result = "";
+    private String readFile(String filePath) throws FileNotFoundException {
+        String res = "";
         try {
-            File file = new File(filePath);
-            FileReader fileReader = new FileReader(file);
+            FileReader fileReader = new FileReader(new File(filePath));
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                result += line;
+                res += line;
             }
             fileReader.close();
             bufferedReader.close();
-        } catch (Exception ex) {
+        } catch (IOException ex) {
             System.err.println("Error when read file: " + ex);
         }
-        return result;
+        return res;
     }
 
     private void writeFile(String filePath, String data) {
-        String result = "";
         try {
             FileWriter fileWriter = new FileWriter(new File(filePath));
             fileWriter.write(data);
@@ -235,12 +256,12 @@ public class Client extends javax.swing.JFrame {
 
     private void chooseTextFilePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseTextFilePathActionPerformed
         // TODO add your handling code here:
-        fileTextPath = openFileChooser(textFile);
+        fileTextPath = showOpenDialog(textFile);
     }//GEN-LAST:event_chooseTextFilePathActionPerformed
 
     private void chooseKeyFilePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseKeyFilePathActionPerformed
         // TODO add your handling code here:
-        fileSecketKeyPath = openFileChooser(textFile);
+        fileSecketKeyPath = showOpenDialog(textFile);
     }//GEN-LAST:event_chooseKeyFilePathActionPerformed
 
     private void doEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doEncryptionActionPerformed
@@ -258,6 +279,11 @@ public class Client extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_doEncryptionActionPerformed
+
+    private void saveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileActionPerformed
+        // TODO add your handling code here:
+        showSaveDialog(result.getText());
+    }//GEN-LAST:event_saveFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -315,6 +341,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField keyFile;
     private javax.swing.JTextArea result;
+    private javax.swing.JButton saveFile;
     private javax.swing.JTextField textFile;
     // End of variables declaration//GEN-END:variables
 }

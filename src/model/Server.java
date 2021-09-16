@@ -63,12 +63,21 @@ public class Server {
             DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
             DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
 
-            String text = dataInputStream.readUTF();
-            String SECRET_KEY = dataInputStream.readUTF();
+            int option = 1;
 
-            String result = decrypt(text, SECRET_KEY);
-            result = result.toUpperCase();
-            dataOutputStream.writeUTF(result);
+            if (option == 1) {
+                String text = dataInputStream.readUTF();
+                String SECRET_KEY = dataInputStream.readUTF();
+                String result = decrypt(text, SECRET_KEY);
+                result = result.toUpperCase();
+                dataOutputStream.writeUTF(result);
+            } else if(option == 2){
+                String text = dataInputStream.readUTF();
+                String SECRET_KEY = dataInputStream.readUTF();
+                
+                String result = encrypt(text, SECRET_KEY);
+                dataOutputStream.writeUTF(result);
+            }
 
             client.close();
             System.out.println(client.getInetAddress().getHostName() + " disconnected");
