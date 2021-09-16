@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
 import java.nio.file.Path;
+import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -57,39 +58,44 @@ public class Client extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        textFile = new javax.swing.JTextField();
-        chooseTextFilePath = new javax.swing.JButton();
+        chosenFileName = new javax.swing.JTextField();
+        chooseFile = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        keyFile = new javax.swing.JTextField();
-        chooseKeyFilePath = new javax.swing.JButton();
+        chosenKeyFileName = new javax.swing.JTextField();
+        chooseKeyFile = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         result = new javax.swing.JTextArea();
         doDecryption = new javax.swing.JButton();
         doEncryption = new javax.swing.JButton();
         saveFile = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textInput = new javax.swing.JTextArea();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        secretKeyInput = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Chọn đường dẫn file mã hóa");
 
-        chooseTextFilePath.setText("...");
-        chooseTextFilePath.addActionListener(new java.awt.event.ActionListener() {
+        chooseFile.setText("...");
+        chooseFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseTextFilePathActionPerformed(evt);
+                chooseFileActionPerformed(evt);
             }
         });
 
         jLabel2.setText("Chọn đường dẫn đến file Key");
 
-        chooseKeyFilePath.setText("...");
-        chooseKeyFilePath.addActionListener(new java.awt.event.ActionListener() {
+        chooseKeyFile.setText("...");
+        chooseKeyFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseKeyFilePathActionPerformed(evt);
+                chooseKeyFileActionPerformed(evt);
             }
         });
 
-        jLabel3.setText("Kết quả");
+        jLabel3.setText("Log");
 
         result.setColumns(20);
         result.setRows(5);
@@ -116,6 +122,14 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        textInput.setColumns(20);
+        textInput.setRows(5);
+        jScrollPane2.setViewportView(textInput);
+
+        jLabel4.setText("Nhập chuỗi");
+
+        jLabel5.setText("Nhập Secret Key (từ 8 kí tự trở lên)");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -123,51 +137,72 @@ public class Client extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(keyFile, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
-                            .addComponent(textFile, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chooseTextFilePath)
-                            .addComponent(chooseKeyFilePath)))
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(chosenKeyFileName, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                                    .addComponent(chosenFileName, javax.swing.GroupLayout.Alignment.LEADING))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(chooseFile)
+                                    .addComponent(chooseKeyFile)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(doDecryption)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(doEncryption)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(saveFile)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 251, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(doDecryption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(doEncryption)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(saveFile)))
-                .addContainerGap(86, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel4)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                            .addComponent(jLabel5)
+                            .addComponent(secretKeyInput))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(chosenFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chooseFile))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(chosenKeyFileName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(chooseKeyFile))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(doDecryption)
+                            .addComponent(doEncryption)
+                            .addComponent(saveFile))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chooseTextFilePath))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+                .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(keyFile, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chooseKeyFilePath))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(doDecryption)
-                    .addComponent(doEncryption)
-                    .addComponent(saveFile))
-                .addGap(45, 45, 45)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addComponent(secretKeyInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41))
         );
 
         pack();
@@ -179,8 +214,17 @@ public class Client extends javax.swing.JFrame {
         } else {
             try {
                 // TODO add your handling code here:
+                client = new Socket(host, port);
+                dataInputStream = new DataInputStream(client.getInputStream());
+                dataOutputStream = new DataOutputStream(client.getOutputStream());
+                
+                String encryptedText = readFile(fileTextPath);
+                String SECRET_KEY = readFile(fileSecketKeyPath);
+                
                 dataOutputStream.writeInt(1);
-                dataOutputStream.writeUTF(textFile.getText());
+                dataOutputStream.writeUTF(encryptedText);
+                dataOutputStream.writeUTF(SECRET_KEY);
+                
                 result.setText(dataInputStream.readUTF());
 
             } catch (IOException ex) {
@@ -190,9 +234,9 @@ public class Client extends javax.swing.JFrame {
     }//GEN-LAST:event_doDecryptionActionPerformed
 
     private Boolean checkDir() {
-        if (textFile.getText().isEmpty()) {
+        if (chosenFileName.getText().isEmpty()) {
             return false;
-        } else if (keyFile.getText().isEmpty()) {
+        } else if (chosenKeyFileName.getText().isEmpty()) {
             return false;
         } else {
             return true;
@@ -205,7 +249,6 @@ public class Client extends javax.swing.JFrame {
         fileChooser.setDialogTitle("Chọn file");
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
-            fileTextPath = fileChooser.getSelectedFile().getAbsolutePath();
             textField.setText(fileChooser.getSelectedFile().getName());
             return fileChooser.getSelectedFile().getAbsolutePath();
         }
@@ -225,20 +268,19 @@ public class Client extends javax.swing.JFrame {
     }
 
     private String readFile(String filePath) throws FileNotFoundException {
-        String res = "";
+        String text = "";
+        Scanner sc = null;
+
         try {
-            FileReader fileReader = new FileReader(new File(filePath));
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                res += line;
-            }
-            fileReader.close();
-            bufferedReader.close();
-        } catch (IOException ex) {
-            System.err.println("Error when read file: " + ex);
+            sc = new Scanner(new File(filePath));
+        } catch (FileNotFoundException ex) {
+            System.err.println(ex.getMessage());
         }
-        return res;
+
+        while (sc.hasNext()) {
+            text += sc.nextLine();
+        }
+        return text;
     }
 
     private void writeFile(String filePath, String data) {
@@ -252,15 +294,15 @@ public class Client extends javax.swing.JFrame {
 
     }
 
-    private void chooseTextFilePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseTextFilePathActionPerformed
+    private void chooseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFileActionPerformed
         // TODO add your handling code here:
-        fileTextPath = showOpenDialog(textFile);
-    }//GEN-LAST:event_chooseTextFilePathActionPerformed
+        fileTextPath = showOpenDialog(chosenFileName);
+    }//GEN-LAST:event_chooseFileActionPerformed
 
-    private void chooseKeyFilePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseKeyFilePathActionPerformed
+    private void chooseKeyFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseKeyFileActionPerformed
         // TODO add your handling code here:
-        fileSecketKeyPath = showOpenDialog(keyFile);
-    }//GEN-LAST:event_chooseKeyFilePathActionPerformed
+        fileSecketKeyPath = showOpenDialog(chosenKeyFileName);
+    }//GEN-LAST:event_chooseKeyFileActionPerformed
 
     private void doEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doEncryptionActionPerformed
         // TODO add your handling code here:
@@ -272,9 +314,16 @@ public class Client extends javax.swing.JFrame {
                 client = new Socket(host, port);
                 dataInputStream = new DataInputStream(client.getInputStream());
                 dataOutputStream = new DataOutputStream(client.getOutputStream());
+                
+                String text = readFile(fileTextPath);
+                String key = readFile(fileSecketKeyPath);
+                System.out.println(text);
 
                 dataOutputStream.writeInt(2);
-                dataOutputStream.writeUTF(textFile.getText());
+
+                dataOutputStream.writeUTF(text);
+                dataOutputStream.writeUTF(key);
+
                 result.setText(dataInputStream.readUTF());
 
             } catch (IOException ex) {
@@ -329,17 +378,22 @@ public class Client extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton chooseKeyFilePath;
-    private javax.swing.JButton chooseTextFilePath;
+    private javax.swing.JButton chooseFile;
+    private javax.swing.JButton chooseKeyFile;
+    private javax.swing.JTextField chosenFileName;
+    private javax.swing.JTextField chosenKeyFileName;
     private javax.swing.JButton doDecryption;
     private javax.swing.JButton doEncryption;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField keyFile;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea result;
     private javax.swing.JButton saveFile;
-    private javax.swing.JTextField textFile;
+    private javax.swing.JTextField secretKeyInput;
+    private javax.swing.JTextArea textInput;
     // End of variables declaration//GEN-END:variables
 }
