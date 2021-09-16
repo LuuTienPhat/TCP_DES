@@ -5,10 +5,17 @@
  */
 package views;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
 import java.nio.file.Path;
 import java.util.logging.Level;
@@ -196,6 +203,36 @@ public class Client extends javax.swing.JFrame {
         return "";
     }
 
+    private String readFile(String filePath) throws FileNotFoundException, IOException {
+        String result = "";
+        try {
+            File file = new File(filePath);
+            FileReader fileReader = new FileReader(file);
+            BufferedReader bufferedReader = new BufferedReader(fileReader);
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                result += line;
+            }
+            fileReader.close();
+            bufferedReader.close();
+        } catch (Exception ex) {
+            System.err.println("Error when read file: " + ex);
+        }
+        return result;
+    }
+
+    private void writeFile(String filePath, String data) {
+        String result = "";
+        try {
+            FileWriter fileWriter = new FileWriter(new File(filePath));
+            fileWriter.write(data);
+            fileWriter.close();
+        } catch (IOException ex) {
+            System.out.println("Error when write file: " + ex);
+        }
+
+    }
+
     private void chooseTextFilePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseTextFilePathActionPerformed
         // TODO add your handling code here:
         fileTextPath = openFileChooser(textFile);
@@ -239,13 +276,17 @@ public class Client extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Client.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Client.class
+                    .getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
@@ -256,7 +297,8 @@ public class Client extends javax.swing.JFrame {
                 try {
                     new Client().setVisible(true);
                 } catch (IOException ex) {
-                    Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Client.class
+                            .getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
