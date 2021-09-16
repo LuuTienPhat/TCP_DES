@@ -79,6 +79,12 @@ public class Client extends javax.swing.JFrame {
 
         jLabel1.setText("Chọn đường dẫn file mã hóa");
 
+        chosenFileName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chosenFileNameActionPerformed(evt);
+            }
+        });
+
         chooseFile.setText("...");
         chooseFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -214,6 +220,7 @@ public class Client extends javax.swing.JFrame {
         } else {
             try {
                 // TODO add your handling code here:
+
                 client = new Socket(host, port);
                 dataInputStream = new DataInputStream(client.getInputStream());
                 dataOutputStream = new DataOutputStream(client.getOutputStream());
@@ -224,7 +231,7 @@ public class Client extends javax.swing.JFrame {
                 dataOutputStream.writeInt(1);
                 dataOutputStream.writeUTF(encryptedText);
                 dataOutputStream.writeUTF(SECRET_KEY);
-                
+
                 result.setText(dataInputStream.readUTF());
 
             } catch (IOException ex) {
@@ -249,6 +256,8 @@ public class Client extends javax.swing.JFrame {
         fileChooser.setDialogTitle("Chọn file");
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
+
+            fileTextPath = fileChooser.getSelectedFile().getAbsolutePath();
             textField.setText(fileChooser.getSelectedFile().getName());
             return fileChooser.getSelectedFile().getAbsolutePath();
         }
@@ -303,7 +312,7 @@ public class Client extends javax.swing.JFrame {
         // TODO add your handling code here:
         fileSecketKeyPath = showOpenDialog(chosenKeyFileName);
     }//GEN-LAST:event_chooseKeyFileActionPerformed
-
+                                    
     private void doEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doEncryptionActionPerformed
         // TODO add your handling code here:
         if (!checkDir()) {
@@ -320,10 +329,9 @@ public class Client extends javax.swing.JFrame {
                 System.out.println(text);
 
                 dataOutputStream.writeInt(2);
-
                 dataOutputStream.writeUTF(text);
                 dataOutputStream.writeUTF(key);
-
+                
                 result.setText(dataInputStream.readUTF());
 
             } catch (IOException ex) {
@@ -336,6 +344,10 @@ public class Client extends javax.swing.JFrame {
         // TODO add your handling code here:
         showSaveDialog(result.getText());
     }//GEN-LAST:event_saveFileActionPerformed
+
+    private void chosenFileNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chosenFileNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chosenFileNameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -375,7 +387,8 @@ public class Client extends javax.swing.JFrame {
                 new Client().setVisible(true);
             }
         });
-    }
+}
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton chooseFile;
