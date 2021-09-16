@@ -63,7 +63,7 @@ public class Server {
             DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
             DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
 
-            int option = 1;
+            int option = dataInputStream.readInt();
 
             if (option == 1) {
                 String text = dataInputStream.readUTF();

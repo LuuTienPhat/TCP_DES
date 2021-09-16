@@ -43,11 +43,8 @@ public class Client extends javax.swing.JFrame {
      *
      * @throws java.io.IOException
      */
-    public Client() throws IOException {
+    public Client() {
         initComponents();
-        client = new Socket(host, port);
-        dataInputStream = new DataInputStream(client.getInputStream());
-        dataOutputStream = new DataOutputStream(client.getOutputStream());
     }
 
     /**
@@ -182,6 +179,7 @@ public class Client extends javax.swing.JFrame {
         } else {
             try {
                 // TODO add your handling code here:
+                dataOutputStream.writeInt(1);
                 dataOutputStream.writeUTF(textFile.getText());
                 result.setText(dataInputStream.readUTF());
 
@@ -208,12 +206,12 @@ public class Client extends javax.swing.JFrame {
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             fileTextPath = fileChooser.getSelectedFile().getAbsolutePath();
-            textFile.setText(fileChooser.getSelectedFile().getName());
+            textField.setText(fileChooser.getSelectedFile().getName());
             return fileChooser.getSelectedFile().getAbsolutePath();
         }
         return "";
     }
-    
+
     private String showSaveDialog(String data) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new java.io.File("."));
@@ -261,7 +259,7 @@ public class Client extends javax.swing.JFrame {
 
     private void chooseKeyFilePathActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseKeyFilePathActionPerformed
         // TODO add your handling code here:
-        fileSecketKeyPath = showOpenDialog(textFile);
+        fileSecketKeyPath = showOpenDialog(keyFile);
     }//GEN-LAST:event_chooseKeyFilePathActionPerformed
 
     private void doEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doEncryptionActionPerformed
@@ -271,6 +269,11 @@ public class Client extends javax.swing.JFrame {
         } else {
             try {
                 // TODO add your handling code here:
+                client = new Socket(host, port);
+                dataInputStream = new DataInputStream(client.getInputStream());
+                dataOutputStream = new DataOutputStream(client.getOutputStream());
+
+                dataOutputStream.writeInt(2);
                 dataOutputStream.writeUTF(textFile.getText());
                 result.setText(dataInputStream.readUTF());
 
@@ -320,12 +323,7 @@ public class Client extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                try {
-                    new Client().setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(Client.class
-                            .getName()).log(Level.SEVERE, null, ex);
-                }
+                new Client().setVisible(true);
             }
         });
     }
