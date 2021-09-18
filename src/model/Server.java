@@ -40,19 +40,30 @@ public class Server {
 
     public static String decrypt(String text, String SECRET_KEY) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         //byte[] decodedKey = Base64.getDecoder().decode(SECRET_KEY);
-//        byte[] decodeText = Base64.getDecoder().decode(text);
+        byte[] decodeText = Base64.getDecoder().decode(text);
 
         Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5PADDING");
         SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "DES");
 
         cipher.init(Cipher.DECRYPT_MODE, skeySpec);
-        byte[] byteDecrypted = cipher.doFinal(text.getBytes());
+        byte[] byteDecrypted = cipher.doFinal(decodeText);
         String decrypted = new String(byteDecrypted);
 
         return decrypted;
     }
 
-    public static String encrypt(String text, String SECRET_KEY) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException, UnsupportedEncodingException {
+//    public static String decrypt(byte[] encryptedText, String SECRET_KEY) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+//        Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5PADDING");
+//        SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "DES");
+//
+////        byte[] decodedKey = Base64.getDecoder().decode(SECRET_KEY);
+//        cipher.init(Cipher.DECRYPT_MODE, skeySpec);
+//        byte[] byteDecrypted = cipher.doFinal(encryptedText);
+//
+//        String decryptedText = Base64.getEncoder().encodeToString(byteDecrypted);
+//        return decryptedText;
+//    }
+    public static String encrypt(String text, String SECRET_KEY) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5PADDING");
         SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "DES");
         cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
@@ -99,66 +110,85 @@ public class Server {
         encryptOrDecrypt(key, Cipher.DECRYPT_MODE, is, os);
     }
 
-    public static void main(String[] args) throws FileNotFoundException, Throwable {
+//    public static void main(String[] args) throws FileNotFoundException, Throwable {
+//
+//        FileInputStream seckey = new FileInputStream("D:\\Phat\\Documents\\NetBeansProjects\\TCP_DES\\key.txt");
+//        byte[] b = new byte[8];
+//        seckey.read(b);
+//        //String key = "squirrel123"; // needs to be at least 8 characters for DES
+//        String key = seckey.toString();
+//        
+//        FileInputStream fis = new FileInputStream("D:\\Phat\\Documents\\NetBeansProjects\\TCP_DES\\original.txt");
+//        FileOutputStream fos = new FileOutputStream("D:\\Phat\\Documents\\NetBeansProjects\\TCP_DES\\encrypted.txt");
+//        encrypt(key, fis, fos);
+//
+//        FileInputStream fis2 = new FileInputStream("D:\\Phat\\Documents\\NetBeansProjects\\TCP_DES\\encrypted.txt");
+//        FileOutputStream fos2 = new FileOutputStream("D:\\Phat\\Documents\\NetBeansProjects\\TCP_DES\\decrypted.txt");
+//        decrypt(key, fis2, fos2);
+//    }
+    public static void main(String[] args) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        int port = 9999;
+        ServerSocket server = new ServerSocket(port);
+        System.out.println("Server is running at port " + port);
 
-        FileInputStream seckey = new FileInputStream("D:\\Phat\\Documents\\NetBeansProjects\\TCP_DES\\key.txt");
-        byte[] b = new byte[8];
-        seckey.read(b);
-        //String key = "squirrel123"; // needs to be at least 8 characters for DES
-        String key = seckey.toString();
-        
-        FileInputStream fis = new FileInputStream("D:\\Phat\\Documents\\NetBeansProjects\\TCP_DES\\original.txt");
-        FileOutputStream fos = new FileOutputStream("D:\\Phat\\Documents\\NetBeansProjects\\TCP_DES\\encrypted.txt");
-        encrypt(key, fis, fos);
+//        String text = "luu tien phat";
+//        String key = "12345678";
+//
+//        String encryted = encrypt(text, key);
+//        System.out.println(decrypt(encryted, key));
+        while (true) {
+            Socket client = server.accept();
+            System.out.println(client.getInetAddress().getCanonicalHostName() + " connected to Server");
+            DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
+            DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
 
-        FileInputStream fis2 = new FileInputStream("D:\\Phat\\Documents\\NetBeansProjects\\TCP_DES\\encrypted.txt");
-        FileOutputStream fos2 = new FileOutputStream("D:\\Phat\\Documents\\NetBeansProjects\\TCP_DES\\decrypted.txt");
-        decrypt(key, fis2, fos2);
-    }
+            int option = dataInputStream.readInt();
 
-//    public static void main(String[] args) throws IOException, NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-//        int port = 9999;
-//        ServerSocket server = new ServerSocket(port);
-//        System.out.println("Server is running at port " + port);
-//
-//        while (true) {
-//            Socket client = server.accept();
-//            System.out.println(client.getInetAddress().getCanonicalHostName() + " connected to Server");
-//            DataInputStream dataInputStream = new DataInputStream(client.getInputStream());
-//            DataOutputStream dataOutputStream = new DataOutputStream(client.getOutputStream());
-//
-//            int option = dataInputStream.readInt();
-//
-//            if (option == 1) {
-//                System.out.println("You choose option 1");
-//
-//                String text = dataInputStream.readUTF();
-//                String SECRET_KEY = dataInputStream.readUTF();
-//
-//                System.out.println("text: " + text);
-//                System.out.println("SECRE_KEY: " + SECRET_KEY);
-//
+            switch (option) {
+                case 1:
+                    {
+                        System.out.println("You choose option 1");
+                        String text = dataInputStream.readUTF();
+                        String SECRET_KEY = dataInputStream.readUTF();
+                        System.out.println("text: " + text);
+                        System.out.println("SECRE_KEY: " + SECRET_KEY);
+                        
 //                String result = decrypt(text, SECRET_KEY);
 //                result = result.toUpperCase();
 //                dataOutputStream.writeUTF(result);
-//
-//            } else if (option == 2) {
-//                System.out.println("You choose option 2");
-//
-//                String text = dataInputStream.readUTF();
-//                String SECRET_KEY = dataInputStream.readUTF();
-//
-//                System.out.println("text: " + text);
-//                System.out.println("SECRE_KEY: " + SECRET_KEY);
-//
-//                String result = encrypt(text, SECRET_KEY);
-//                dataOutputStream.writeUTF(result);
-//            }
-//
-//            client.close();
-//            System.out.println(client.getInetAddress().getHostName() + " disconnected");
-//
-//        }
-//
-//    }
+                        break;
+                    }
+                case 2:
+                    {
+                        System.out.println("You choose option 2");
+                        String text = dataInputStream.readUTF();
+                        String SECRET_KEY = dataInputStream.readUTF();
+                        System.out.println("text: " + text);
+                        System.out.println("SECRER_KEY: " + SECRET_KEY);
+                        String result = encrypt(text, SECRET_KEY);
+                        dataOutputStream.writeUTF(result);
+                        break;
+                    }
+                case 3:
+                    {
+                        System.out.println("You choose option 3");
+                        String text = dataInputStream.readUTF();
+                        String SECRET_KEY = dataInputStream.readUTF();
+                        System.out.println("text: " + text);
+                        System.out.println("SECRER_KEY: " + SECRET_KEY);
+                        String result = decrypt(text, SECRET_KEY);
+                        result = result.toUpperCase();
+                        dataOutputStream.writeUTF(result);
+                        break;
+                    }
+                default:
+                    break;
+            }
+
+            client.close();
+            System.out.println(client.getInetAddress().getHostName() + " disconnected");
+
+        }
+
+    }
 }
