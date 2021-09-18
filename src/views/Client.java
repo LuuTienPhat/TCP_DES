@@ -5,27 +5,17 @@
  */
 package views;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.Socket;
-import java.nio.file.Path;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
@@ -41,8 +31,8 @@ import javax.swing.JTextField;
  */
 public class Client extends javax.swing.JFrame {
 
-    private String host = "localhost";
-    private int port = 9999;
+    private final String host = "localhost";
+    private final int port = 9999;
     Socket client;
     DataInputStream dataInputStream;
     DataOutputStream dataOutputStream;
@@ -52,7 +42,6 @@ public class Client extends javax.swing.JFrame {
     /**
      * Creates new form Client
      *
-     * @throws java.io.IOException
      */
     public Client() {
         initComponents();
@@ -265,11 +254,11 @@ public class Client extends javax.swing.JFrame {
     private Boolean checkDir() {
         if (chosenFileName.getText().isEmpty()) {
             return false;
-        } else if (chosenKeyFileName.getText().isEmpty()) {
-            return false;
-        } else {
-            return true;
         }
+        if (chosenKeyFileName.getText().isEmpty()) {
+            return false;
+        }
+        return true;
     }
 
     private String showOpenDialog(JTextField textField) {
@@ -371,7 +360,7 @@ public class Client extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_chosenFileNameActionPerformed
 
-    public static String encrypt(String text, String SECRET_KEY) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+    private String encrypt(String text, String SECRET_KEY) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5PADDING");
         SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "DES");
         cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
@@ -381,24 +370,22 @@ public class Client extends javax.swing.JFrame {
         return encrypted;
     }
 
-
-    public Boolean checkInput() {
+    private boolean checkInput() {
         if (textInput.getText().isEmpty()) {
             return false;
         }
         if (secretKeyInput.getText().isEmpty()) {
             return false;
         }
-
+        if (secretKeyInput.getText().length() != 8) {
+            return false;
+        }
         return true;
     }
 
 
     private void encyptThenSendToServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encyptThenSendToServerActionPerformed
         // TODO add your handling code here:
-        textInput.setText("phat");
-        secretKeyInput.setText("12345678");
-        
         if (!checkInput()) {
             JOptionPane.showMessageDialog(null, "Xin hãy kiểm tra dữ liệu đầu vào");
         } else {
@@ -417,14 +404,11 @@ public class Client extends javax.swing.JFrame {
                     dataOutputStream.writeInt(3);
                     dataOutputStream.writeUTF(encryted);
                     dataOutputStream.writeUTF(key);
-                    
+
                 } catch (IOException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException ex) {
                     System.err.println(ex.getMessage());
                 }
 
-//                dataOutputStream.writeInt(3);
-//                dataOutputStream.write(encryted);
-//                dataOutputStream.writeUTF(key);
                 result.setText(dataInputStream.readUTF());
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
