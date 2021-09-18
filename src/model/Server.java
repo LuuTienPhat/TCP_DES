@@ -175,7 +175,7 @@ public class Server {
                         String text = dataInputStream.readUTF();
                         String SECRET_KEY = dataInputStream.readUTF();
                         System.out.println("text: " + text);
-                        System.out.println("SECRER_KEY: " + SECRET_KEY);
+                        System.out.println("SECRET_KEY: " + SECRET_KEY);
                         String result = decrypt(text, SECRET_KEY);
                         result = result.toUpperCase();
                         dataOutputStream.writeUTF(result);
