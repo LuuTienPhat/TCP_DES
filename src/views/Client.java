@@ -257,7 +257,7 @@ public class Client extends javax.swing.JFrame {
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
 
-            fileTextPath = fileChooser.getSelectedFile().getAbsolutePath();
+//            /fileTextPath = fileChooser.getSelectedFile().getAbsolutePath();
             textField.setText(fileChooser.getSelectedFile().getName());
             return fileChooser.getSelectedFile().getAbsolutePath();
         }
