@@ -16,11 +16,21 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.nio.file.Path;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
+import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
@@ -74,6 +84,7 @@ public class Client extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         secretKeyInput = new javax.swing.JTextField();
+        encyptThenSendToServer = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -136,6 +147,13 @@ public class Client extends javax.swing.JFrame {
 
         jLabel5.setText("Nhập Secret Key (từ 8 kí tự trở lên)");
 
+        encyptThenSendToServer.setText("Mã hóa");
+        encyptThenSendToServer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                encyptThenSendToServerActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -171,6 +189,8 @@ public class Client extends javax.swing.JFrame {
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                             .addComponent(jLabel5)
                             .addComponent(secretKeyInput))
+                        .addGap(18, 18, 18)
+                        .addComponent(encyptThenSendToServer)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -203,7 +223,9 @@ public class Client extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(encyptThenSendToServer))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -224,10 +246,10 @@ public class Client extends javax.swing.JFrame {
                 client = new Socket(host, port);
                 dataInputStream = new DataInputStream(client.getInputStream());
                 dataOutputStream = new DataOutputStream(client.getOutputStream());
-                
+
                 String encryptedText = readFile(fileTextPath);
                 String SECRET_KEY = readFile(fileSecketKeyPath);
-                
+
                 dataOutputStream.writeInt(1);
                 dataOutputStream.writeUTF(encryptedText);
                 dataOutputStream.writeUTF(SECRET_KEY);
@@ -312,7 +334,7 @@ public class Client extends javax.swing.JFrame {
         // TODO add your handling code here:
         fileSecketKeyPath = showOpenDialog(chosenKeyFileName);
     }//GEN-LAST:event_chooseKeyFileActionPerformed
-                                    
+
     private void doEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doEncryptionActionPerformed
         // TODO add your handling code here:
         if (!checkDir()) {
@@ -323,7 +345,7 @@ public class Client extends javax.swing.JFrame {
                 client = new Socket(host, port);
                 dataInputStream = new DataInputStream(client.getInputStream());
                 dataOutputStream = new DataOutputStream(client.getOutputStream());
-                
+
                 String text = readFile(fileTextPath);
                 String key = readFile(fileSecketKeyPath);
                 System.out.println(text);
@@ -331,7 +353,7 @@ public class Client extends javax.swing.JFrame {
                 dataOutputStream.writeInt(2);
                 dataOutputStream.writeUTF(text);
                 dataOutputStream.writeUTF(key);
-                
+
                 result.setText(dataInputStream.readUTF());
 
             } catch (IOException ex) {
@@ -348,6 +370,67 @@ public class Client extends javax.swing.JFrame {
     private void chosenFileNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chosenFileNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_chosenFileNameActionPerformed
+
+    public static String encrypt(String text, String SECRET_KEY) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5PADDING");
+        SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "DES");
+        cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
+        byte[] cipherText = cipher.doFinal(text.getBytes());
+
+        String encrypted = Base64.getEncoder().encodeToString(cipherText);
+        return encrypted;
+    }
+
+
+    public Boolean checkInput() {
+        if (textInput.getText().isEmpty()) {
+            return false;
+        }
+        if (secretKeyInput.getText().isEmpty()) {
+            return false;
+        }
+
+        return true;
+    }
+
+
+    private void encyptThenSendToServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encyptThenSendToServerActionPerformed
+        // TODO add your handling code here:
+        textInput.setText("phat");
+        secretKeyInput.setText("12345678");
+        
+        if (!checkInput()) {
+            JOptionPane.showMessageDialog(null, "Xin hãy kiểm tra dữ liệu đầu vào");
+        } else {
+            try {
+                // TODO add your handling code here:
+                client = new Socket(host, port);
+                dataInputStream = new DataInputStream(client.getInputStream());
+                dataOutputStream = new DataOutputStream(client.getOutputStream());
+
+                String text = textInput.getText();
+                String key = secretKeyInput.getText();
+
+                try {
+
+                    String encryted = encrypt(text, key);
+                    dataOutputStream.writeInt(3);
+                    dataOutputStream.writeUTF(encryted);
+                    dataOutputStream.writeUTF(key);
+                    
+                } catch (IOException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException ex) {
+                    System.err.println(ex.getMessage());
+                }
+
+//                dataOutputStream.writeInt(3);
+//                dataOutputStream.write(encryted);
+//                dataOutputStream.writeUTF(key);
+                result.setText(dataInputStream.readUTF());
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_encyptThenSendToServerActionPerformed
 
     /**
      * @param args the command line arguments
@@ -387,7 +470,7 @@ public class Client extends javax.swing.JFrame {
                 new Client().setVisible(true);
             }
         });
-}
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -397,6 +480,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JTextField chosenKeyFileName;
     private javax.swing.JButton doDecryption;
     private javax.swing.JButton doEncryption;
+    private javax.swing.JButton encyptThenSendToServer;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
