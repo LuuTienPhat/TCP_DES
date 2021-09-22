@@ -487,15 +487,20 @@ public class Client extends javax.swing.JFrame {
             count++;
             //showMessage("Nhập khóa");
             //return false;
-        }
-        if (secretKeyInput.getText().trim().length() != 8) {
-            keyInputWarning.setText("Khóa phải có 8 ký tự");
+        } else if (secretKeyInput.getText().trim().length() != 8) {
+            textInputWarning.setText("Xin hãy nhập văn bản");
             count++;
             //showMessage("Khóa phải có 8 chữ");
             //return false;
         }
 
-        return (count == 0) ? true : false;
+        if (count == 0) {
+            textInputWarning.setText("");
+            textInputWarning.setText("");
+            return true;
+        }
+        return false;
+
     }
 
     private void showMessage(String message) {
@@ -545,7 +550,7 @@ public class Client extends javax.swing.JFrame {
     private void clearConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearConsoleActionPerformed
         // TODO add your handling code here:
         result.setText("");
-        resultRow =  0;
+        resultRow = 0;
     }//GEN-LAST:event_clearConsoleActionPerformed
 
     private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
@@ -566,7 +571,6 @@ public class Client extends javax.swing.JFrame {
         chosenKeyFileName.setText("");
     }//GEN-LAST:event_resetFieldActionPerformed
 
-    
     //NOT USED BUT DO NOT DELETE
     private Boolean checkDir() {
         if (chosenFileName.getText().isEmpty()) {
