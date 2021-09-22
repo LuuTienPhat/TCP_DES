@@ -496,7 +496,7 @@ public class Client extends javax.swing.JFrame {
 
         if (count == 0) {
             textInputWarning.setText("");
-            textInputWarning.setText("");
+            keyInputWarning.setText("");
             return true;
         }
         return false;
@@ -508,7 +508,7 @@ public class Client extends javax.swing.JFrame {
     }
 
     private void showResult(String text) {
-        if (resultRow != 1) {
+        if (resultRow != 0) {
             result.append("\n");
         }
         result.append(" " + text);
@@ -542,6 +542,7 @@ public class Client extends javax.swing.JFrame {
 
                 showResult(dataInputStream.readUTF());
             } catch (IOException ex) {
+                showMessage("Không thể kết nối đến Server");
                 System.err.println(ex.getMessage());
             }
         }
