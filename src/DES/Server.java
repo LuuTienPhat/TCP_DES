@@ -54,17 +54,6 @@ public class Server {
         return decrypted;
     }
 
-//    public static String decrypt(byte[] encryptedText, String SECRET_KEY) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-//        Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5PADDING");
-//        SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "DES");
-//
-////        byte[] decodedKey = Base64.getDecoder().decode(SECRET_KEY);
-//        cipher.init(Cipher.DECRYPT_MODE, skeySpec);
-//        byte[] byteDecrypted = cipher.doFinal(encryptedText);
-//
-//        String decryptedText = Base64.getEncoder().encodeToString(byteDecrypted);
-//        return decryptedText;
-//    }
     public static String encrypt(String text, String SECRET_KEY) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
         Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5PADDING");
         SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "DES");
