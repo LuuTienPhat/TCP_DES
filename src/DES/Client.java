@@ -59,20 +59,19 @@ public class Client extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        doEncryption = new javax.swing.JButton();
+        doDecryption = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        saveFile = new javax.swing.JButton();
-        doEncryption = new javax.swing.JButton();
         secretKeyInput = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         textInput = new javax.swing.JTextArea();
-        encyptThenSendToServer = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         result = new javax.swing.JTextArea();
-        encyptThenSendToServer1 = new javax.swing.JButton();
+        clearConsole = new javax.swing.JButton();
         encyptThenSendToServer2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -80,10 +79,38 @@ public class Client extends javax.swing.JFrame {
         chooseKeyFile = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         chosenKeyFileName = new javax.swing.JTextField();
-        chooseFile = new javax.swing.JButton();
-        doDecryption = new javax.swing.JButton();
+        chooseFile1 = new javax.swing.JButton();
+        saveFile = new javax.swing.JButton();
+        encyptThenSendToServer = new javax.swing.JButton();
+        resetField = new javax.swing.JButton();
+
+        doEncryption.setBackground(new java.awt.Color(238, 238, 238));
+        doEncryption.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        doEncryption.setForeground(new java.awt.Color(44, 6, 31));
+        doEncryption.setText("Mã hóa");
+        doEncryption.setBorder(null);
+        doEncryption.setBorderPainted(false);
+        doEncryption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doEncryptionActionPerformed(evt);
+            }
+        });
+
+        doDecryption.setBackground(new java.awt.Color(238, 238, 238));
+        doDecryption.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        doDecryption.setForeground(new java.awt.Color(44, 6, 31));
+        doDecryption.setText("Giải mã");
+        doDecryption.setBorder(null);
+        doDecryption.setBorderPainted(false);
+        doDecryption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                doDecryptionActionPerformed(evt);
+            }
+        });
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("DES");
+        setResizable(false);
 
         jPanel3.setBackground(new java.awt.Color(34, 40, 49));
 
@@ -96,32 +123,6 @@ public class Client extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 211, 105));
         jLabel5.setText("Nhập Secret Key (từ 8 kí tự trở lên)");
-
-        saveFile.setBackground(new java.awt.Color(238, 238, 238));
-        saveFile.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        saveFile.setForeground(new java.awt.Color(44, 6, 31));
-        saveFile.setText("Lưu File");
-        saveFile.setBorder(null);
-        saveFile.setBorderPainted(false);
-        saveFile.setFocusPainted(false);
-        saveFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveFileActionPerformed(evt);
-            }
-        });
-
-        doEncryption.setBackground(new java.awt.Color(238, 238, 238));
-        doEncryption.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        doEncryption.setForeground(new java.awt.Color(44, 6, 31));
-        doEncryption.setText("Mã hóa");
-        doEncryption.setBorder(null);
-        doEncryption.setBorderPainted(false);
-        doEncryption.setFocusPainted(false);
-        doEncryption.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                doEncryptionActionPerformed(evt);
-            }
-        });
 
         secretKeyInput.setBackground(new java.awt.Color(34, 40, 49));
         secretKeyInput.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
@@ -139,68 +140,31 @@ public class Client extends javax.swing.JFrame {
         textInput.setHighlighter(null);
         jScrollPane1.setViewportView(textInput);
 
-        encyptThenSendToServer.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        encyptThenSendToServer.setText("Mã hóa");
-        encyptThenSendToServer.setBorderPainted(false);
-        encyptThenSendToServer.setFocusPainted(false);
-        encyptThenSendToServer.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                encyptThenSendToServerActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(secretKeyInput))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(136, 136, 136)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(saveFile, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(doEncryption, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(58, 58, 58))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(encyptThenSendToServer)
-                        .addGap(161, 161, 161))))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4)
+                    .addComponent(secretKeyInput)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel4)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(saveFile, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(encyptThenSendToServer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(doEncryption, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 27, Short.MAX_VALUE)
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(secretKeyInput, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(secretKeyInput, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
@@ -212,24 +176,24 @@ public class Client extends javax.swing.JFrame {
         result.setBackground(new java.awt.Color(34, 40, 49));
         result.setColumns(20);
         result.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        result.setForeground(new java.awt.Color(255, 211, 105));
+        result.setForeground(new java.awt.Color(238, 238, 238));
         result.setRows(5);
         result.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(57, 62, 70), 3));
         result.setHighlighter(null);
         jScrollPane3.setViewportView(result);
 
-        encyptThenSendToServer1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        encyptThenSendToServer1.setText("Mã hóa");
-        encyptThenSendToServer1.setBorderPainted(false);
-        encyptThenSendToServer1.setFocusPainted(false);
-        encyptThenSendToServer1.addActionListener(new java.awt.event.ActionListener() {
+        clearConsole.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        clearConsole.setText("Clear console");
+        clearConsole.setBorderPainted(false);
+        clearConsole.setFocusPainted(false);
+        clearConsole.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                encyptThenSendToServer1ActionPerformed(evt);
+                clearConsoleActionPerformed(evt);
             }
         });
 
         encyptThenSendToServer2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        encyptThenSendToServer2.setText("Mã hóa");
+        encyptThenSendToServer2.setText("Thoát");
         encyptThenSendToServer2.setBorderPainted(false);
         encyptThenSendToServer2.setFocusPainted(false);
         encyptThenSendToServer2.addActionListener(new java.awt.event.ActionListener() {
@@ -249,11 +213,11 @@ public class Client extends javax.swing.JFrame {
         chosenFileName.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         chosenFileName.setForeground(new java.awt.Color(238, 238, 238));
         chosenFileName.setBorder(null);
+        chosenFileName.setFocusable(false);
 
         chooseKeyFile.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         chooseKeyFile.setText("...");
         chooseKeyFile.setBorderPainted(false);
-        chooseKeyFile.setFocusPainted(false);
         chooseKeyFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chooseKeyFileActionPerformed(evt);
@@ -268,32 +232,19 @@ public class Client extends javax.swing.JFrame {
         chosenKeyFileName.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         chosenKeyFileName.setForeground(new java.awt.Color(238, 238, 238));
         chosenKeyFileName.setBorder(null);
+        chosenKeyFileName.setFocusable(false);
         chosenKeyFileName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 chosenKeyFileNameActionPerformed(evt);
             }
         });
 
-        chooseFile.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        chooseFile.setText("...");
-        chooseFile.setBorderPainted(false);
-        chooseFile.setFocusPainted(false);
-        chooseFile.addActionListener(new java.awt.event.ActionListener() {
+        chooseFile1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        chooseFile1.setText("...");
+        chooseFile1.setBorderPainted(false);
+        chooseFile1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseFileActionPerformed(evt);
-            }
-        });
-
-        doDecryption.setBackground(new java.awt.Color(238, 238, 238));
-        doDecryption.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        doDecryption.setForeground(new java.awt.Color(44, 6, 31));
-        doDecryption.setText("Giải mã");
-        doDecryption.setBorder(null);
-        doDecryption.setBorderPainted(false);
-        doDecryption.setFocusPainted(false);
-        doDecryption.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                doDecryptionActionPerformed(evt);
+                chooseFile1ActionPerformed(evt);
             }
         });
 
@@ -304,45 +255,70 @@ public class Client extends javax.swing.JFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chosenFileName)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(150, 150, 150))
-                            .addComponent(chosenKeyFileName))
+                            .addComponent(jLabel2)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(chosenKeyFileName, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                                .addComponent(chosenFileName, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chooseKeyFile)
-                            .addComponent(chooseFile))
-                        .addGap(85, 85, 85))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(55, 55, 55)))
-                .addComponent(doDecryption, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
+                            .addComponent(chooseFile1)
+                            .addComponent(chooseKeyFile))))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(doDecryption, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(chooseFile, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chosenFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chooseKeyFile, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chooseFile1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(chosenKeyFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(chosenKeyFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chooseKeyFile, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        saveFile.setBackground(new java.awt.Color(238, 238, 238));
+        saveFile.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        saveFile.setForeground(new java.awt.Color(44, 6, 31));
+        saveFile.setText("Lưu File");
+        saveFile.setBorder(null);
+        saveFile.setBorderPainted(false);
+        saveFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveFileActionPerformed(evt);
+            }
+        });
+
+        encyptThenSendToServer.setBackground(new java.awt.Color(255, 211, 105));
+        encyptThenSendToServer.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        encyptThenSendToServer.setText("Gửi lên server");
+        encyptThenSendToServer.setBorderPainted(false);
+        encyptThenSendToServer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                encyptThenSendToServerActionPerformed(evt);
+            }
+        });
+
+        resetField.setBackground(new java.awt.Color(238, 238, 238));
+        resetField.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        resetField.setForeground(new java.awt.Color(44, 6, 31));
+        resetField.setText("Reset");
+        resetField.setBorder(null);
+        resetField.setBorderPainted(false);
+        resetField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetFieldActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -351,21 +327,20 @@ public class Client extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(encyptThenSendToServer1)
-                                    .addComponent(encyptThenSendToServer2)))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 109, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap())))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane3)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(clearConsole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(encyptThenSendToServer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(saveFile, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(encyptThenSendToServer2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(resetField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,20 +352,27 @@ public class Client extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(encyptThenSendToServer1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(encyptThenSendToServer2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(encyptThenSendToServer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(saveFile, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(resetField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(112, 112, 112)
+                .addComponent(clearConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(encyptThenSendToServer2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(102, 102, 102))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -491,11 +473,6 @@ public class Client extends javax.swing.JFrame {
 
     }
 
-    private void chooseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFileActionPerformed
-        // TODO add your handling code here:
-        fileTextPath = showOpenDialog(chosenFileName);
-    }//GEN-LAST:event_chooseFileActionPerformed
-
     private void chooseKeyFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseKeyFileActionPerformed
         // TODO add your handling code here:
         fileSecketKeyPath = showOpenDialog(chosenKeyFileName);
@@ -582,16 +559,17 @@ public class Client extends javax.swing.JFrame {
                     System.err.println(ex.getMessage());
                 }
 
-                textInput.setText(dataInputStream.readUTF());
+                result.setText(dataInputStream.readUTF());
             } catch (IOException ex) {
                 System.err.println(ex.getMessage());
             }
         }
     }//GEN-LAST:event_encyptThenSendToServerActionPerformed
 
-    private void encyptThenSendToServer1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encyptThenSendToServer1ActionPerformed
+    private void clearConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearConsoleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_encyptThenSendToServer1ActionPerformed
+        result.setText("");
+    }//GEN-LAST:event_clearConsoleActionPerformed
 
     private void encyptThenSendToServer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encyptThenSendToServer2ActionPerformed
         // TODO add your handling code here:
@@ -600,6 +578,18 @@ public class Client extends javax.swing.JFrame {
     private void chosenKeyFileNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chosenKeyFileNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_chosenKeyFileNameActionPerformed
+
+    private void chooseFile1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFile1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chooseFile1ActionPerformed
+
+    private void resetFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetFieldActionPerformed
+        // TODO add your handling code here:
+        textInput.setText("");
+        secretKeyInput.setText("");
+        chosenFileName.setText("");
+        chosenKeyFileName.setText("");
+    }//GEN-LAST:event_resetFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -643,14 +633,14 @@ public class Client extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton chooseFile;
+    private javax.swing.JButton chooseFile1;
     private javax.swing.JButton chooseKeyFile;
     private javax.swing.JTextField chosenFileName;
     private javax.swing.JTextField chosenKeyFileName;
+    private javax.swing.JButton clearConsole;
     private javax.swing.JButton doDecryption;
     private javax.swing.JButton doEncryption;
     private javax.swing.JButton encyptThenSendToServer;
-    private javax.swing.JButton encyptThenSendToServer1;
     private javax.swing.JButton encyptThenSendToServer2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -662,6 +652,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JButton resetField;
     private javax.swing.JTextArea result;
     private javax.swing.JButton saveFile;
     private javax.swing.JTextField secretKeyInput;
