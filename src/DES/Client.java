@@ -5,8 +5,6 @@ package DES;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
@@ -38,7 +36,7 @@ public class Client extends javax.swing.JFrame {
     Socket client;
     DataInputStream dataInputStream;
     DataOutputStream dataOutputStream;
-
+    int resultRow = 0;
     String fileTextPath = "", fileSecketKeyPath = "";
 
     /**
@@ -61,6 +59,14 @@ public class Client extends javax.swing.JFrame {
 
         doEncryption = new javax.swing.JButton();
         doDecryption = new javax.swing.JButton();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        chosenFileName = new javax.swing.JTextField();
+        chooseFile = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        chosenKeyFileName = new javax.swing.JTextField();
+        chooseKeyFile = new javax.swing.JButton();
+        saveFile = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -68,19 +74,13 @@ public class Client extends javax.swing.JFrame {
         secretKeyInput = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         textInput = new javax.swing.JTextArea();
+        keyInputWarning = new javax.swing.JLabel();
+        textInputWarning = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         result = new javax.swing.JTextArea();
         clearConsole = new javax.swing.JButton();
-        encyptThenSendToServer2 = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        chosenFileName = new javax.swing.JTextField();
-        chooseKeyFile = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        chosenKeyFileName = new javax.swing.JTextField();
-        chooseFile1 = new javax.swing.JButton();
-        saveFile = new javax.swing.JButton();
+        exit = new javax.swing.JButton();
         encyptThenSendToServer = new javax.swing.JButton();
         resetField = new javax.swing.JButton();
 
@@ -108,143 +108,48 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("DES");
-        setResizable(false);
-
-        jPanel3.setBackground(new java.awt.Color(34, 40, 49));
-
-        jPanel1.setBackground(new java.awt.Color(57, 62, 70));
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 211, 105));
-        jLabel4.setText("Nhập chuỗi");
-
-        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 211, 105));
-        jLabel5.setText("Nhập Secret Key (từ 8 kí tự trở lên)");
-
-        secretKeyInput.setBackground(new java.awt.Color(34, 40, 49));
-        secretKeyInput.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        secretKeyInput.setForeground(new java.awt.Color(238, 238, 238));
-        secretKeyInput.setBorder(null);
-
-        jScrollPane1.setBorder(null);
-
-        textInput.setBackground(new java.awt.Color(34, 40, 49));
-        textInput.setColumns(20);
-        textInput.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        textInput.setForeground(new java.awt.Color(238, 238, 238));
-        textInput.setRows(3);
-        textInput.setBorder(null);
-        textInput.setHighlighter(null);
-        jScrollPane1.setViewportView(textInput);
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel5)
-                    .addComponent(jLabel4)
-                    .addComponent(secretKeyInput)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(secretKeyInput, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 211, 105));
-        jLabel3.setText("Log");
-
-        jScrollPane3.setBorder(null);
-
-        result.setBackground(new java.awt.Color(34, 40, 49));
-        result.setColumns(20);
-        result.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        result.setForeground(new java.awt.Color(238, 238, 238));
-        result.setRows(5);
-        result.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(57, 62, 70), 3));
-        result.setHighlighter(null);
-        jScrollPane3.setViewportView(result);
-
-        clearConsole.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        clearConsole.setText("Clear console");
-        clearConsole.setBorderPainted(false);
-        clearConsole.setFocusPainted(false);
-        clearConsole.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                clearConsoleActionPerformed(evt);
-            }
-        });
-
-        encyptThenSendToServer2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        encyptThenSendToServer2.setText("Thoát");
-        encyptThenSendToServer2.setBorderPainted(false);
-        encyptThenSendToServer2.setFocusPainted(false);
-        encyptThenSendToServer2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                encyptThenSendToServer2ActionPerformed(evt);
-            }
-        });
-
         jPanel2.setBackground(new java.awt.Color(57, 62, 70));
         jPanel2.setForeground(new java.awt.Color(57, 62, 70));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 211, 105));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(238, 238, 238));
         jLabel1.setText("Chọn đường dẫn file mã hóa");
 
         chosenFileName.setBackground(new java.awt.Color(34, 40, 49));
         chosenFileName.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         chosenFileName.setForeground(new java.awt.Color(238, 238, 238));
         chosenFileName.setBorder(null);
+        chosenFileName.setCaretColor(new java.awt.Color(238, 238, 238));
         chosenFileName.setFocusable(false);
 
-        chooseKeyFile.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        chooseKeyFile.setText("...");
-        chooseKeyFile.setBorderPainted(false);
-        chooseKeyFile.addActionListener(new java.awt.event.ActionListener() {
+        chooseFile.setBackground(new java.awt.Color(255, 211, 105));
+        chooseFile.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        chooseFile.setText("...");
+        chooseFile.setBorderPainted(false);
+        chooseFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseKeyFileActionPerformed(evt);
+                chooseFileActionPerformed(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 211, 105));
-        jLabel2.setText("Chọn đường dẫn đến file Key");
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(238, 238, 238));
+        jLabel2.setText("Chọn đường dẫn đến file Khóa");
 
         chosenKeyFileName.setBackground(new java.awt.Color(34, 40, 49));
         chosenKeyFileName.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         chosenKeyFileName.setForeground(new java.awt.Color(238, 238, 238));
         chosenKeyFileName.setBorder(null);
+        chosenKeyFileName.setCaretColor(new java.awt.Color(238, 238, 238));
         chosenKeyFileName.setFocusable(false);
-        chosenKeyFileName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chosenKeyFileNameActionPerformed(evt);
-            }
-        });
 
-        chooseFile1.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        chooseFile1.setText("...");
-        chooseFile1.setBorderPainted(false);
-        chooseFile1.addActionListener(new java.awt.event.ActionListener() {
+        chooseKeyFile.setBackground(new java.awt.Color(255, 211, 105));
+        chooseKeyFile.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        chooseKeyFile.setText("...");
+        chooseKeyFile.setBorderPainted(false);
+        chooseKeyFile.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseFile1ActionPerformed(evt);
+                chooseKeyFileActionPerformed(evt);
             }
         });
 
@@ -264,7 +169,7 @@ public class Client extends javax.swing.JFrame {
                                 .addComponent(chosenFileName, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chooseFile1)
+                            .addComponent(chooseFile)
                             .addComponent(chooseKeyFile))))
                 .addContainerGap(61, Short.MAX_VALUE))
         );
@@ -276,7 +181,7 @@ public class Client extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(chosenFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chooseFile1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(chooseFile, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -287,7 +192,7 @@ public class Client extends javax.swing.JFrame {
         );
 
         saveFile.setBackground(new java.awt.Color(238, 238, 238));
-        saveFile.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        saveFile.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         saveFile.setForeground(new java.awt.Color(44, 6, 31));
         saveFile.setText("Lưu File");
         saveFile.setBorder(null);
@@ -298,8 +203,120 @@ public class Client extends javax.swing.JFrame {
             }
         });
 
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("DES");
+        setResizable(false);
+
+        jPanel3.setBackground(new java.awt.Color(34, 40, 49));
+
+        jPanel1.setBackground(new java.awt.Color(57, 62, 70));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(238, 238, 238));
+        jLabel4.setText("Nhập văn bản");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(238, 238, 238));
+        jLabel5.setText("Nhập Khóa (8 ký tự)");
+
+        secretKeyInput.setBackground(new java.awt.Color(34, 40, 49));
+        secretKeyInput.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        secretKeyInput.setForeground(new java.awt.Color(238, 238, 238));
+        secretKeyInput.setBorder(null);
+        secretKeyInput.setCaretColor(new java.awt.Color(255, 255, 255));
+
+        jScrollPane1.setBorder(null);
+
+        textInput.setBackground(new java.awt.Color(34, 40, 49));
+        textInput.setColumns(20);
+        textInput.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        textInput.setForeground(new java.awt.Color(238, 238, 238));
+        textInput.setRows(3);
+        textInput.setBorder(null);
+        textInput.setCaretColor(new java.awt.Color(238, 238, 238));
+        textInput.setHighlighter(null);
+        jScrollPane1.setViewportView(textInput);
+
+        keyInputWarning.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        keyInputWarning.setForeground(new java.awt.Color(255, 211, 105));
+        keyInputWarning.setText(" ");
+
+        textInputWarning.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        textInputWarning.setForeground(new java.awt.Color(255, 211, 105));
+        textInputWarning.setText(" ");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(textInputWarning, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                    .addComponent(keyInputWarning, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(secretKeyInput, javax.swing.GroupLayout.Alignment.LEADING))
+                .addContainerGap(73, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textInputWarning)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(secretKeyInput, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(keyInputWarning)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(238, 238, 238));
+        jLabel3.setText("Log");
+
+        jScrollPane3.setBorder(null);
+
+        result.setEditable(false);
+        result.setBackground(new java.awt.Color(34, 40, 49));
+        result.setColumns(20);
+        result.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        result.setForeground(new java.awt.Color(255, 211, 105));
+        result.setRows(5);
+        result.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(57, 62, 70), 3));
+        result.setCaretColor(new java.awt.Color(255, 211, 105));
+        result.setHighlighter(null);
+        jScrollPane3.setViewportView(result);
+
+        clearConsole.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        clearConsole.setText("Clear console");
+        clearConsole.setBorderPainted(false);
+        clearConsole.setFocusPainted(false);
+        clearConsole.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                clearConsoleActionPerformed(evt);
+            }
+        });
+
+        exit.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        exit.setText("Thoát");
+        exit.setBorderPainted(false);
+        exit.setFocusPainted(false);
+        exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exitActionPerformed(evt);
+            }
+        });
+
         encyptThenSendToServer.setBackground(new java.awt.Color(255, 211, 105));
-        encyptThenSendToServer.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        encyptThenSendToServer.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         encyptThenSendToServer.setText("Gửi lên server");
         encyptThenSendToServer.setBorderPainted(false);
         encyptThenSendToServer.addActionListener(new java.awt.event.ActionListener() {
@@ -326,19 +343,15 @@ public class Client extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jScrollPane3)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(clearConsole, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(encyptThenSendToServer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(saveFile, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(encyptThenSendToServer2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(clearConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(encyptThenSendToServer, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(resetField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -346,26 +359,26 @@ public class Client extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(encyptThenSendToServer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(saveFile, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(resetField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(112, 112, 112)
-                .addComponent(clearConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(encyptThenSendToServer2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(102, 102, 102))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(resetField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(encyptThenSendToServer, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(clearConsole, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(exit, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(102, 102, 102))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -376,9 +389,7 @@ public class Client extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -410,11 +421,160 @@ public class Client extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_doDecryptionActionPerformed
 
+    private void chooseKeyFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseKeyFileActionPerformed
+        // TODO add your handling code here:
+        fileSecketKeyPath = showOpenDialog(chosenKeyFileName);
+    }//GEN-LAST:event_chooseKeyFileActionPerformed
+
+    private void doEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doEncryptionActionPerformed
+        // TODO add your handling code here:
+        if (!checkInput()) {
+            return;
+        }
+        try {
+            // TODO add your handling code here:
+            client = new Socket(host, port);
+            dataInputStream = new DataInputStream(client.getInputStream());
+            dataOutputStream = new DataOutputStream(client.getOutputStream());
+
+            String text = readFile(fileTextPath);
+            String key = readFile(fileSecketKeyPath);
+            System.out.println(text);
+
+            dataOutputStream.writeInt(2);
+            dataOutputStream.writeUTF(text);
+            dataOutputStream.writeUTF(key);
+
+            showResult(dataInputStream.readUTF());
+
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
+
+    }//GEN-LAST:event_doEncryptionActionPerformed
+
+    private void saveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileActionPerformed
+        // TODO add your handling code here:
+        String filePath = showSaveDialog("Lưu Bản mã");
+        String filePath2 = showSaveDialog("Lưu Khóa");
+
+        if (!checkInput()) {
+            return;
+        }
+    }//GEN-LAST:event_saveFileActionPerformed
+
+    private String encrypt(String text, String SECRET_KEY) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
+        Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5PADDING");
+        SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "DES");
+        cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
+        byte[] cipherText = cipher.doFinal(text.getBytes());
+
+        String encrypted = Base64.getEncoder().encodeToString(cipherText);
+        return encrypted;
+    }
+
+    private boolean checkInput() {
+        int count = 0;
+
+        if (textInput.getText().isEmpty()) {
+            textInputWarning.setText("Xin hãy nhập văn bản");
+            count++;
+            //showMessage("Nhập bản ghi");
+            //return false;
+        }
+        if (secretKeyInput.getText().trim().isEmpty()) {
+            keyInputWarning.setText("Xin hãy nhập khóa");
+            count++;
+            //showMessage("Nhập khóa");
+            //return false;
+        }
+        if (secretKeyInput.getText().trim().length() != 8) {
+            keyInputWarning.setText("Khóa phải có 8 ký tự");
+            count++;
+            //showMessage("Khóa phải có 8 chữ");
+            //return false;
+        }
+
+        return (count == 0) ? true : false;
+    }
+
+    private void showMessage(String message) {
+        JOptionPane.showMessageDialog(null, message);
+    }
+
+    private void showResult(String text) {
+        if (resultRow != 1) {
+            result.append("\n");
+        }
+        result.append(" " + text);
+        resultRow++;
+    }
+
+    private void encyptThenSendToServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encyptThenSendToServerActionPerformed
+        // TODO add your handling code here:
+        if (!checkInput()) {
+            return;
+        } else {
+            try {
+                // TODO add your handling code here:
+                client = new Socket(host, port);
+                dataInputStream = new DataInputStream(client.getInputStream());
+                dataOutputStream = new DataOutputStream(client.getOutputStream());
+
+                String text = textInput.getText();
+                String key = secretKeyInput.getText();
+
+                try {
+
+                    String encryted = encrypt(text, key);
+                    //dataOutputStream.writeInt(1);
+                    dataOutputStream.writeUTF(encryted);
+                    dataOutputStream.writeUTF(key);
+
+                } catch (IOException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException ex) {
+                    System.err.println(ex.getMessage());
+                }
+
+                showResult(dataInputStream.readUTF());
+            } catch (IOException ex) {
+                System.err.println(ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_encyptThenSendToServerActionPerformed
+
+    private void clearConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearConsoleActionPerformed
+        // TODO add your handling code here:
+        result.setText("");
+        resultRow =  0;
+    }//GEN-LAST:event_clearConsoleActionPerformed
+
+    private void exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitActionPerformed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_exitActionPerformed
+
+    private void chooseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFileActionPerformed
+        // TODO add your handling code here:
+        fileTextPath = showOpenDialog(chosenFileName);
+    }//GEN-LAST:event_chooseFileActionPerformed
+
+    private void resetFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetFieldActionPerformed
+        // TODO add your handling code here:
+        textInput.setText("");
+        secretKeyInput.setText("");
+        chosenFileName.setText("");
+        chosenKeyFileName.setText("");
+    }//GEN-LAST:event_resetFieldActionPerformed
+
+    
+    //NOT USED BUT DO NOT DELETE
     private Boolean checkDir() {
         if (chosenFileName.getText().isEmpty()) {
+            showMessage("Chọn file lưu bản mã");
             return false;
         }
         if (chosenKeyFileName.getText().isEmpty()) {
+            showMessage("Chọn file lưu khóa");
             return false;
         }
         return true;
@@ -434,14 +594,13 @@ public class Client extends javax.swing.JFrame {
         return "";
     }
 
-    private String showSaveDialog(String data) {
+    private String showSaveDialog(String title) {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new java.io.File("."));
-        fileChooser.setDialogTitle("Lưu file");
+        fileChooser.setDialogTitle(title);
         int returnValue = fileChooser.showSaveDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             String file = fileChooser.getSelectedFile().getAbsolutePath();
-            writeFile(file, data);
         }
         return "";
     }
@@ -472,124 +631,6 @@ public class Client extends javax.swing.JFrame {
         }
 
     }
-
-    private void chooseKeyFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseKeyFileActionPerformed
-        // TODO add your handling code here:
-        fileSecketKeyPath = showOpenDialog(chosenKeyFileName);
-    }//GEN-LAST:event_chooseKeyFileActionPerformed
-
-    private void doEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doEncryptionActionPerformed
-        // TODO add your handling code here:
-        if (!checkDir()) {
-            JOptionPane.showMessageDialog(null, "Xin hãy kiểm tra dữ liệu đầu vào");
-        } else {
-            try {
-                // TODO add your handling code here:
-                client = new Socket(host, port);
-                dataInputStream = new DataInputStream(client.getInputStream());
-                dataOutputStream = new DataOutputStream(client.getOutputStream());
-
-                String text = readFile(fileTextPath);
-                String key = readFile(fileSecketKeyPath);
-                System.out.println(text);
-
-                dataOutputStream.writeInt(2);
-                dataOutputStream.writeUTF(text);
-                dataOutputStream.writeUTF(key);
-
-                textInput.setText(dataInputStream.readUTF());
-
-            } catch (IOException ex) {
-                System.err.println(ex.getMessage());
-            }
-        }
-    }//GEN-LAST:event_doEncryptionActionPerformed
-
-    private void saveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileActionPerformed
-        // TODO add your handling code here:
-        showSaveDialog(textInput.getText());
-    }//GEN-LAST:event_saveFileActionPerformed
-
-    private String encrypt(String text, String SECRET_KEY) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5PADDING");
-        SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "DES");
-        cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
-        byte[] cipherText = cipher.doFinal(text.getBytes());
-
-        String encrypted = Base64.getEncoder().encodeToString(cipherText);
-        return encrypted;
-    }
-
-    private boolean checkInput() {
-        if (textInput.getText().isEmpty()) {
-            return false;
-        }
-        if (secretKeyInput.getText().isEmpty()) {
-            return false;
-        }
-        if (secretKeyInput.getText().length() != 8) {
-            return false;
-        }
-        return true;
-    }
-
-
-    private void encyptThenSendToServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encyptThenSendToServerActionPerformed
-        // TODO add your handling code here:
-        if (!checkInput()) {
-            JOptionPane.showMessageDialog(null, "Xin hãy kiểm tra dữ liệu đầu vào");
-        } else {
-            try {
-                // TODO add your handling code here:
-                client = new Socket(host, port);
-                dataInputStream = new DataInputStream(client.getInputStream());
-                dataOutputStream = new DataOutputStream(client.getOutputStream());
-
-                String text = textInput.getText();
-                String key = secretKeyInput.getText();
-
-                try {
-
-                    String encryted = encrypt(text, key);
-                    dataOutputStream.writeInt(3);
-                    dataOutputStream.writeUTF(encryted);
-                    dataOutputStream.writeUTF(key);
-
-                } catch (IOException | NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | BadPaddingException ex) {
-                    System.err.println(ex.getMessage());
-                }
-
-                result.setText(dataInputStream.readUTF());
-            } catch (IOException ex) {
-                System.err.println(ex.getMessage());
-            }
-        }
-    }//GEN-LAST:event_encyptThenSendToServerActionPerformed
-
-    private void clearConsoleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearConsoleActionPerformed
-        // TODO add your handling code here:
-        result.setText("");
-    }//GEN-LAST:event_clearConsoleActionPerformed
-
-    private void encyptThenSendToServer2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_encyptThenSendToServer2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_encyptThenSendToServer2ActionPerformed
-
-    private void chosenKeyFileNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chosenKeyFileNameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chosenKeyFileNameActionPerformed
-
-    private void chooseFile1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFile1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_chooseFile1ActionPerformed
-
-    private void resetFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetFieldActionPerformed
-        // TODO add your handling code here:
-        textInput.setText("");
-        secretKeyInput.setText("");
-        chosenFileName.setText("");
-        chosenKeyFileName.setText("");
-    }//GEN-LAST:event_resetFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -633,7 +674,7 @@ public class Client extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton chooseFile1;
+    private javax.swing.JButton chooseFile;
     private javax.swing.JButton chooseKeyFile;
     private javax.swing.JTextField chosenFileName;
     private javax.swing.JTextField chosenKeyFileName;
@@ -641,7 +682,7 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JButton doDecryption;
     private javax.swing.JButton doEncryption;
     private javax.swing.JButton encyptThenSendToServer;
-    private javax.swing.JButton encyptThenSendToServer2;
+    private javax.swing.JButton exit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -652,10 +693,12 @@ public class Client extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JLabel keyInputWarning;
     private javax.swing.JButton resetField;
     private javax.swing.JTextArea result;
     private javax.swing.JButton saveFile;
     private javax.swing.JTextField secretKeyInput;
     private javax.swing.JTextArea textInput;
+    private javax.swing.JLabel textInputWarning;
     // End of variables declaration//GEN-END:variables
 }
