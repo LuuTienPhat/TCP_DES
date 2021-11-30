@@ -362,7 +362,7 @@ public class FormClient extends javax.swing.JFrame {
             keyInputWarning.setText("Please type the key!");
             count++;
         } else if (txtKey.getText().trim().length() != 8) {
-            keyInputWarning.setText("The key must contain 8 characters enough");
+            keyInputWarning.setText("The key must contain 8 characters");
             count++;
         } else {
             keyInputWarning.setText("");
