@@ -233,12 +233,10 @@ public class Server2 extends javax.swing.JFrame {
                             System.out.println("Ban ma: " + cipherText);
                             System.out.println("Key: " + key);
                             String text = DES.decrypt(cipherText, key);
-                            dos.writeUTF(text.toUpperCase());
                             
-//                            text = text.trim().toUpperCase();
-//                            cipherText = DES.encrypt(text, key);
-//                            dos.writeUTF(cipherText);
-//                            System.out.println("Ban ma gui Client: " + cipherText);
+                            text = text.trim().toUpperCase();
+                            cipherText = DES.encrypt(text, key);
+                            dos.writeUTF(cipherText);
                         } catch (IOException ex) {
                             ex.printStackTrace();
                         }
