@@ -6,31 +6,20 @@ package client;
  * and open the template in the editor.
  */
 import des.DES;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
-
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-
 import java.net.Socket;
-
 import java.io.DataInputStream;
-
 import java.io.DataOutputStream;
 import java.io.FileWriter;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -39,7 +28,8 @@ import javax.crypto.Cipher;
 public class FormClient extends javax.swing.JFrame {
 
     int resultRow = 0;
-    String fileTextPath = "", fileSecketKeyPath = "";
+    String currentDirectory = new File("").getAbsolutePath();
+    JFileChooser fileChooser = new JFileChooser(currentDirectory);
 
     /**
      * Creates new form Client
@@ -49,8 +39,14 @@ public class FormClient extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
         lbStatus.setText("Connected to " + Client.client.getInetAddress().getHostAddress() + ":" + Client.client.getPort());
+
         keyInputWarning.setText("");
         textInputWarning.setText("");
+
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Text Documents (*.txt)", "txt");
+        fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setAcceptAllFileFilterUsed(true);
+        fileChooser.setFileFilter(filter);
     }
 
     /**
@@ -62,16 +58,6 @@ public class FormClient extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        doEncryption = new javax.swing.JButton();
-        doDecryption = new javax.swing.JButton();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        chosenFileName = new javax.swing.JTextField();
-        chooseFile = new javax.swing.JButton();
-        jLabel2 = new javax.swing.JLabel();
-        chosenKeyFileName = new javax.swing.JTextField();
-        chooseKeyFile = new javax.swing.JButton();
-        saveFile = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -91,125 +77,8 @@ public class FormClient extends javax.swing.JFrame {
         lbStatus = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         btnDisconnect = new javax.swing.JButton();
-
-        doEncryption.setBackground(new java.awt.Color(238, 238, 238));
-        doEncryption.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        doEncryption.setForeground(new java.awt.Color(44, 6, 31));
-        doEncryption.setText("Mã hóa");
-        doEncryption.setBorder(null);
-        doEncryption.setBorderPainted(false);
-        doEncryption.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                doEncryptionActionPerformed(evt);
-            }
-        });
-
-        doDecryption.setBackground(new java.awt.Color(238, 238, 238));
-        doDecryption.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        doDecryption.setForeground(new java.awt.Color(44, 6, 31));
-        doDecryption.setText("Giải mã");
-        doDecryption.setBorder(null);
-        doDecryption.setBorderPainted(false);
-        doDecryption.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                doDecryptionActionPerformed(evt);
-            }
-        });
-
-        jPanel2.setBackground(new java.awt.Color(57, 62, 70));
-        jPanel2.setForeground(new java.awt.Color(57, 62, 70));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(238, 238, 238));
-        jLabel1.setText("Chọn đường dẫn file mã hóa");
-
-        chosenFileName.setBackground(new java.awt.Color(34, 40, 49));
-        chosenFileName.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        chosenFileName.setForeground(new java.awt.Color(238, 238, 238));
-        chosenFileName.setBorder(null);
-        chosenFileName.setCaretColor(new java.awt.Color(238, 238, 238));
-        chosenFileName.setFocusable(false);
-
-        chooseFile.setBackground(new java.awt.Color(255, 211, 105));
-        chooseFile.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        chooseFile.setText("...");
-        chooseFile.setBorderPainted(false);
-        chooseFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseFileActionPerformed(evt);
-            }
-        });
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(238, 238, 238));
-        jLabel2.setText("Chọn đường dẫn đến file Khóa");
-
-        chosenKeyFileName.setBackground(new java.awt.Color(34, 40, 49));
-        chosenKeyFileName.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        chosenKeyFileName.setForeground(new java.awt.Color(238, 238, 238));
-        chosenKeyFileName.setBorder(null);
-        chosenKeyFileName.setCaretColor(new java.awt.Color(238, 238, 238));
-        chosenKeyFileName.setFocusable(false);
-
-        chooseKeyFile.setBackground(new java.awt.Color(255, 211, 105));
-        chooseKeyFile.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        chooseKeyFile.setText("...");
-        chooseKeyFile.setBorderPainted(false);
-        chooseKeyFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                chooseKeyFileActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(chosenKeyFileName, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
-                                .addComponent(chosenFileName, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(chooseFile)
-                            .addComponent(chooseKeyFile))))
-                .addContainerGap(61, Short.MAX_VALUE))
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chosenFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chooseFile, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(chosenKeyFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(chooseKeyFile, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        saveFile.setBackground(new java.awt.Color(238, 238, 238));
-        saveFile.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
-        saveFile.setForeground(new java.awt.Color(44, 6, 31));
-        saveFile.setText("Lưu File");
-        saveFile.setBorder(null);
-        saveFile.setBorderPainted(false);
-        saveFile.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveFileActionPerformed(evt);
-            }
-        });
+        btnOpenFile = new javax.swing.JButton();
+        btnSaveFile = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Client");
@@ -374,6 +243,30 @@ public class FormClient extends javax.swing.JFrame {
             }
         });
 
+        btnOpenFile.setBackground(new java.awt.Color(238, 238, 238));
+        btnOpenFile.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnOpenFile.setForeground(new java.awt.Color(34, 40, 49));
+        btnOpenFile.setText("Open File");
+        btnOpenFile.setBorder(null);
+        btnOpenFile.setBorderPainted(false);
+        btnOpenFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpenFileActionPerformed(evt);
+            }
+        });
+
+        btnSaveFile.setBackground(new java.awt.Color(238, 238, 238));
+        btnSaveFile.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnSaveFile.setForeground(new java.awt.Color(34, 40, 49));
+        btnSaveFile.setText("Save File");
+        btnSaveFile.setBorder(null);
+        btnSaveFile.setBorderPainted(false);
+        btnSaveFile.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSaveFileActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -401,7 +294,9 @@ public class FormClient extends javax.swing.JFrame {
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnResetField, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnDisconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnDisconnect, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnOpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSaveFile, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(69, 69, 69))))
         );
         jPanel3Layout.setVerticalGroup(
@@ -416,13 +311,17 @@ public class FormClient extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(btnOpenFile, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnSaveFile, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnResetField, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addComponent(btnSend, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel3)
@@ -450,90 +349,14 @@ public class FormClient extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void doDecryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doDecryptionActionPerformed
-        if (!checkDir()) {
-            JOptionPane.showMessageDialog(null, "Xin hãy kiểm tra dữ liệu đầu vào");
-        } else {
-            try {
-                // TODO add your handling code here:
-
-                Client.client = new Socket(Client.address, Client.port);
-                Client.dataInputStream = new DataInputStream(Client.client.getInputStream());
-                Client.dataOutputStream = new DataOutputStream(Client.client.getOutputStream());
-
-                String encryptedText = readFile(fileTextPath);
-                String SECRET_KEY = readFile(fileSecketKeyPath);
-
-                Client.dataOutputStream.writeInt(1);
-                Client.dataOutputStream.writeUTF(encryptedText);
-                Client.dataOutputStream.writeUTF(SECRET_KEY);
-
-                txtText.setText(Client.dataInputStream.readUTF());
-
-            } catch (IOException ex) {
-                System.err.println(ex.getMessage());
-            }
-        }
-    }//GEN-LAST:event_doDecryptionActionPerformed
-
-    private void chooseKeyFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseKeyFileActionPerformed
-        // TODO add your handling code here:
-        fileSecketKeyPath = showOpenDialog(chosenKeyFileName);
-    }//GEN-LAST:event_chooseKeyFileActionPerformed
-
-    private void doEncryptionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_doEncryptionActionPerformed
-        // TODO add your handling code here:
-        if (!checkInput()) {
-            return;
-        }
-        try {
-            // TODO add your handling code here:
-            Client.client = new Socket(Client.address, Client.port);
-            Client.dataInputStream = new DataInputStream(Client.client.getInputStream());
-            Client.dataOutputStream = new DataOutputStream(Client.client.getOutputStream());
-
-            String text = readFile(fileTextPath);
-            String key = readFile(fileSecketKeyPath);
-            System.out.println(text);
-
-            Client.dataOutputStream.writeInt(2);
-            Client.dataOutputStream.writeUTF(text);
-            Client.dataOutputStream.writeUTF(key);
-
-            showResult(Client.dataInputStream.readUTF());
-
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
-        }
-
-    }//GEN-LAST:event_doEncryptionActionPerformed
-
-    private void saveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveFileActionPerformed
-        // TODO add your handling code here:
-        String filePath = showSaveDialog("Lưu Bản mã");
-        String filePath2 = showSaveDialog("Lưu Khóa");
-
-        if (!checkInput()) {
-            return;
-        }
-    }//GEN-LAST:event_saveFileActionPerformed
-
-    private String encrypt(String text, String SECRET_KEY) throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException, IllegalBlockSizeException, BadPaddingException {
-        Cipher cipher = Cipher.getInstance("DES/ECB/PKCS5PADDING");
-        SecretKeySpec skeySpec = new SecretKeySpec(SECRET_KEY.getBytes(), "DES");
-        cipher.init(Cipher.ENCRYPT_MODE, skeySpec);
-        byte[] cipherText = cipher.doFinal(text.getBytes());
-
-        String encrypted = Base64.getEncoder().encodeToString(cipherText);
-        return encrypted;
-    }
-
     private boolean checkInput() {
         int count = 0;
 
         if (txtText.getText().isEmpty()) {
             textInputWarning.setText("Please type the text!");
             count++;
+        } else {
+            textInputWarning.setText("");
         }
         if (txtKey.getText().trim().isEmpty()) {
             keyInputWarning.setText("Please type the key!");
@@ -541,6 +364,8 @@ public class FormClient extends javax.swing.JFrame {
         } else if (txtKey.getText().trim().length() != 8) {
             keyInputWarning.setText("The key must contain 8 characters enough");
             count++;
+        } else {
+            keyInputWarning.setText("");
         }
 
         if (count == 0) {
@@ -562,6 +387,22 @@ public class FormClient extends javax.swing.JFrame {
         }
         txtLog.append(" " + text);
         resultRow++;
+    }
+
+    private File getSelectedFileWithExtension(JFileChooser c) {
+        File file = c.getSelectedFile();
+        if (c.getFileFilter() instanceof FileNameExtensionFilter) {
+            String[] exts = ((FileNameExtensionFilter) c.getFileFilter()).getExtensions();
+            String nameLower = file.getName().toLowerCase();
+            for (String ext : exts) { // check if it already has a valid extension
+                if (nameLower.endsWith('.' + ext.toLowerCase())) {
+                    return file; // if yes, return as-is
+                }
+            }
+            // if not, append the first extension from the selected filter
+            file = new File(file.toString() + '.' + exts[0]);
+        }
+        return file;
     }
 
     private void btnSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSendActionPerformed
@@ -609,17 +450,10 @@ public class FormClient extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_btnExitActionPerformed
 
-    private void chooseFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chooseFileActionPerformed
-        // TODO add your handling code here:
-        fileTextPath = showOpenDialog(chosenFileName);
-    }//GEN-LAST:event_chooseFileActionPerformed
-
     private void btnResetFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetFieldActionPerformed
         // TODO add your handling code here:
         txtText.setText("");
         txtKey.setText("");
-        chosenFileName.setText("");
-        chosenKeyFileName.setText("");
     }//GEN-LAST:event_btnResetFieldActionPerformed
 
     private void btnDisconnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisconnectActionPerformed
@@ -633,70 +467,47 @@ public class FormClient extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnDisconnectActionPerformed
 
-    //NOT USED BUT DO NOT DELETE
-    private Boolean checkDir() {
-        if (chosenFileName.getText().isEmpty()) {
-            showMessage("Chọn file lưu bản mã");
-            return false;
-        }
-        if (chosenKeyFileName.getText().isEmpty()) {
-            showMessage("Chọn file lưu khóa");
-            return false;
-        }
-        return true;
-    }
-
-    private String showOpenDialog(JTextField textField) {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new java.io.File("."));
-        fileChooser.setDialogTitle("Chọn file");
+    private void btnOpenFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpenFileActionPerformed
+        // TODO add your handling code here:
         int returnValue = fileChooser.showOpenDialog(null);
         if (returnValue == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            Scanner sc = null;
+            try {
+                sc = new Scanner(file);
+                String text = sc.nextLine();
+                String key = sc.nextLine();
 
-//            /fileTextPath = fileChooser.getSelectedFile().getAbsolutePath();
-            textField.setText(fileChooser.getSelectedFile().getName());
-            return fileChooser.getSelectedFile().getAbsolutePath();
+                txtText.setText(text);
+                txtKey.setText(key);
+                sc.close();
+            } catch (FileNotFoundException ex) {
+                System.err.println(ex.getMessage());
+            }
         }
-        return "";
-    }
+    }//GEN-LAST:event_btnOpenFileActionPerformed
 
-    private String showSaveDialog(String title) {
-        JFileChooser fileChooser = new JFileChooser();
-        fileChooser.setCurrentDirectory(new java.io.File("."));
-        fileChooser.setDialogTitle(title);
-        int returnValue = fileChooser.showSaveDialog(null);
-        if (returnValue == JFileChooser.APPROVE_OPTION) {
-            String file = fileChooser.getSelectedFile().getAbsolutePath();
+    private void btnSaveFileActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSaveFileActionPerformed
+        // TODO add your handling code here:
+        if (!checkInput()) {
+            return;
+        } else {
+            int returnValue = fileChooser.showSaveDialog(null);
+            if (returnValue == JFileChooser.APPROVE_OPTION) {
+                File file = getSelectedFileWithExtension(fileChooser);
+
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
+                    writer.write(txtText.getText());
+                    writer.newLine();
+                    writer.write(txtKey.getText());
+
+                    writer.newLine();
+                } catch (IOException ex) {
+                    Logger.getLogger(FormClient.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         }
-        return "";
-    }
-
-    private String readFile(String filePath) throws FileNotFoundException {
-        String text = "";
-        Scanner sc = null;
-
-        try {
-            sc = new Scanner(new File(filePath));
-        } catch (FileNotFoundException ex) {
-            System.err.println(ex.getMessage());
-        }
-
-        while (sc.hasNext()) {
-            text += sc.nextLine();
-        }
-        return text;
-    }
-
-    private void writeFile(String filePath, String data) {
-        try {
-            FileWriter fileWriter = new FileWriter(new File(filePath));
-            fileWriter.write(data);
-            fileWriter.close();
-        } catch (IOException ex) {
-            System.out.println("Error when write file: " + ex);
-        }
-
-    }
+    }//GEN-LAST:event_btnSaveFileActionPerformed
 
     /**
      * @param args the command line arguments
@@ -734,28 +545,20 @@ public class FormClient extends javax.swing.JFrame {
     private javax.swing.JButton btnClearConsole;
     private javax.swing.JButton btnDisconnect;
     private javax.swing.JButton btnExit;
+    private javax.swing.JButton btnOpenFile;
     private javax.swing.JButton btnResetField;
+    private javax.swing.JButton btnSaveFile;
     private javax.swing.JButton btnSend;
-    private javax.swing.JButton chooseFile;
-    private javax.swing.JButton chooseKeyFile;
-    private javax.swing.JTextField chosenFileName;
-    private javax.swing.JTextField chosenKeyFileName;
-    private javax.swing.JButton doDecryption;
-    private javax.swing.JButton doEncryption;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel keyInputWarning;
     private javax.swing.JLabel lbStatus;
-    private javax.swing.JButton saveFile;
     private javax.swing.JLabel textInputWarning;
     private javax.swing.JTextField txtKey;
     private javax.swing.JTextArea txtLog;
