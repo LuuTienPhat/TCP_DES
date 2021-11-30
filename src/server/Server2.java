@@ -253,7 +253,7 @@ public class Server2 extends javax.swing.JFrame {
         }
     }
 
-    public void setServerState(int state) {
+    public final void setServerState(int state) {
         if (state == 0) {
             lbStatus.setText("Not Activated");
             btnStart.setEnabled(true);
@@ -307,10 +307,8 @@ public class Server2 extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Server2().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new Server2().setVisible(true);
         });
     }
 
