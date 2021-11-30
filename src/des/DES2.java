@@ -4,12 +4,10 @@
  */
 package des;
 
-import static des.DES.encodingType;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Base64;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.crypto.BadPaddingException;
