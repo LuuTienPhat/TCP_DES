@@ -48,6 +48,7 @@ public class FormClientConnection extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Client");
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(34, 40, 49));
 
@@ -148,13 +149,13 @@ public class FormClientConnection extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    
     private void btnConnectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConnectActionPerformed
         // TODO add your handling code here:
         if (txtAddress.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please enter Server's address!");
+            JOptionPane.showMessageDialog(null, "Please enter host address!");
         } else if (txtPort.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please enter Server's port!");
+            JOptionPane.showMessageDialog(null, "Please enter host port!");
         } else {
             Client.address = txtAddress.getText();
             Client.port = Integer.parseInt(txtPort.getText());
