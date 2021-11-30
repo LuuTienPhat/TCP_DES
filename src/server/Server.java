@@ -21,7 +21,7 @@ import javax.swing.border.EmptyBorder;
  *
  * @author Phat
  */
-public class Server2 extends javax.swing.JFrame {
+public class Server extends javax.swing.JFrame {
 
     public static String address;
     public static int port;
@@ -31,7 +31,7 @@ public class Server2 extends javax.swing.JFrame {
     /**
      * Creates new form Server2
      */
-    public Server2() {
+    public Server() {
         initComponents();
         Border border = new CompoundBorder(null, new EmptyBorder(0, 3, 0, 0));
         txtPort.setBorder(border);
@@ -207,7 +207,7 @@ public class Server2 extends javax.swing.JFrame {
             });
             t.start();
         } catch (IOException ex) {
-            Logger.getLogger(Server2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_btnStartActionPerformed
@@ -249,7 +249,7 @@ public class Server2 extends javax.swing.JFrame {
                 client.close();
             }
         } catch (IOException ex) {
-            Logger.getLogger(Server2.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -300,15 +300,16 @@ public class Server2 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Server2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Server.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
-            new Server2().setVisible(true);
+            new Server().setVisible(true);
         });
     }
 
