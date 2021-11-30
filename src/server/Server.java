@@ -13,6 +13,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.border.Border;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
@@ -64,6 +65,7 @@ public class Server extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Server");
         setBackground(new java.awt.Color(34, 40, 49));
+        setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(34, 40, 49));
 
@@ -195,20 +197,45 @@ public class Server extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void showMessage(String message) {
+        JOptionPane.showMessageDialog(null, message);
+    }
+
+    private boolean checkInput() {
+        int count = 0;
+
+        if (txtAddress.getText().isEmpty()) {
+            showMessage("Please type the address!");
+            count++;
+        }
+
+        if (txtPort.getText().isEmpty()) {
+            showMessage("Please type the port!");
+            count++;
+        }
+
+        return count != 0 ? false : true;
+    }
+
     private void btnStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStartActionPerformed
         // TODO add your handling code here:
-        address = txtAddress.getText();
-        port = Integer.parseInt(txtPort.getText());
-        try {
-            server = new ServerSocket(port, 1, InetAddress.getByName(address));
-            setServerState(1);
-            t = new Thread(() -> {
-                startServer();
-            });
-            t.start();
-        } catch (IOException ex) {
-            Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+        if (!checkInput()) {
+            return;
+        } else {
+            address = txtAddress.getText();
+            port = Integer.parseInt(txtPort.getText());
+            try {
+                server = new ServerSocket(port, 100, InetAddress.getByName(address));
+                setServerState(1);
+                t = new Thread(() -> {
+                    startServer();
+                });
+                t.start();
+            } catch (IOException ex) {
+                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+
 
     }//GEN-LAST:event_btnStartActionPerformed
 
@@ -233,7 +260,7 @@ public class Server extends javax.swing.JFrame {
                             System.out.println("Ban ma: " + cipherText);
                             System.out.println("Key: " + key);
                             String text = DES.decrypt(cipherText, key);
-                            
+
                             text = text.trim().toUpperCase();
                             cipherText = DES.encrypt(text, key);
                             dos.writeUTF(cipherText);
