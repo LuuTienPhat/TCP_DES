@@ -225,12 +225,12 @@ public class FormClient extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(238, 238, 238));
-        jLabel5.setText("Enter Key (require 16 characters):");
+        jLabel5.setText("Enter Key (require 8 characters):");
 
         txtKey.setBackground(new java.awt.Color(34, 40, 49));
         txtKey.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
         txtKey.setForeground(new java.awt.Color(238, 238, 238));
-        txtKey.setText("1234567887654321");
+        txtKey.setText("12345678");
         txtKey.setBorder(null);
         txtKey.setCaretColor(new java.awt.Color(255, 255, 255));
         txtKey.setSelectedTextColor(new java.awt.Color(34, 40, 49));
@@ -245,6 +245,7 @@ public class FormClient extends javax.swing.JFrame {
         txtText.setRows(3);
         txtText.setText("Xin chao cac ban chuc mot ngay tot lanh");
         txtText.setBorder(null);
+        txtText.setCaretColor(new java.awt.Color(238, 238, 238));
         txtText.setSelectedTextColor(new java.awt.Color(34, 40, 49));
         txtText.setSelectionColor(new java.awt.Color(255, 211, 105));
         jScrollPane1.setViewportView(txtText);
@@ -303,7 +304,7 @@ public class FormClient extends javax.swing.JFrame {
         txtLog.setForeground(new java.awt.Color(255, 211, 105));
         txtLog.setRows(5);
         txtLog.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(57, 62, 70), 3));
-        txtLog.setCaretColor(new java.awt.Color(255, 211, 105));
+        txtLog.setCaretColor(new java.awt.Color(238, 238, 238));
         txtLog.setSelectedTextColor(new java.awt.Color(34, 40, 49));
         txtLog.setSelectionColor(new java.awt.Color(255, 211, 105));
         jScrollPane3.setViewportView(txtLog);
@@ -537,8 +538,8 @@ public class FormClient extends javax.swing.JFrame {
         if (txtKey.getText().trim().isEmpty()) {
             keyInputWarning.setText("Please type the key!");
             count++;
-        } else if (txtKey.getText().trim().length() !=16) {
-            keyInputWarning.setText("The key must contain 16 characters");
+        } else if (txtKey.getText().trim().length() != 8) {
+            keyInputWarning.setText("The key must contain 8 characters enough");
             count++;
         }
 
@@ -580,18 +581,19 @@ public class FormClient extends javax.swing.JFrame {
                 String cipherText = DES.encrypt(text, key);
                 Client.dataOutputStream.writeUTF(cipherText);
                 Client.dataOutputStream.writeUTF(key);
-                
+
                 String result = Client.dataInputStream.readUTF();
-//                System.out.println("Ban ma: " + result);
-//                result = DES.decrypt(result, key);
-                
+                System.out.println("Ban ma: " + result);
+                result = DES.decrypt(result, key);
                 showResult(result.trim());
-                
+
                 Client.dataInputStream.close();
                 Client.dataOutputStream.close();
                 Client.client.close();
             } catch (IOException ex) {
                 showMessage(ex.getMessage());
+                new FormClientConnection().setVisible(true);
+                this.dispose();
             }
         }
     }//GEN-LAST:event_btnSendActionPerformed
