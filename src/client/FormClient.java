@@ -592,8 +592,8 @@ public class FormClient extends javax.swing.JFrame {
                 Client.client.close();
             } catch (IOException ex) {
                 showMessage(ex.getMessage());
-                new FormClientConnection().setVisible(true);
                 this.dispose();
+                Client.openFormClientConnection();
             }
         }
     }//GEN-LAST:event_btnSendActionPerformed
