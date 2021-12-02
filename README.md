@@ -32,7 +32,7 @@
 ### Client
    1. Client Connection
    
-   ![image](https://user-images.githubusercontent.com/61774212/144467516-3b4a4e4b-bd43-45b1-8cd6-b2743a222d84.png)
+   ![image](https://user-images.githubusercontent.com/61774212/144468407-5ccc5297-5540-4046-af80-dab6ab009e55.png)
     
    2. Client
    
