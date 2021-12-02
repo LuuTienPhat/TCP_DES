@@ -1,2 +1,3 @@
-# TCP_DES
-Client-Server Java using TCP
+# Java TCP Client-Server
+
+1. What is in here
