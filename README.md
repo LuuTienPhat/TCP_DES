@@ -25,14 +25,17 @@
 ## Interface
 
 ### Server
-   ![image](https://user-images.githubusercontent.com/61774212/144467785-1099b360-3a58-4f11-aaf9-cf3a53ae2fdc.png)
+
+   ![image](https://user-images.githubusercontent.com/61774212/144468204-fffed634-3a45-484c-8c4b-f143b334cea2.png)
 
 
 ### Client
    1. Client Connection
+   
    ![image](https://user-images.githubusercontent.com/61774212/144467516-3b4a4e4b-bd43-45b1-8cd6-b2743a222d84.png)
     
    2. Client
+   
    ![image](https://user-images.githubusercontent.com/61774212/144467958-7474521c-f703-46ea-8a9c-ed22fc4dfdf0.png)
 
     
